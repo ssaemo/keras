@@ -39,7 +39,6 @@ from keras.layers import Dense, Conv2D, BatchNormalization, Activation
 from keras.layers import AveragePooling2D, Input, Flatten
 from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler
-from keras.callbacks import ReduceLROnPlateau
 from keras.preprocessing.image import ImageDataGenerator
 from keras.regularizers import l2
 from keras import backend as K
@@ -378,12 +377,7 @@ checkpoint = ModelCheckpoint(filepath=filepath,
 
 lr_scheduler = LearningRateScheduler(lr_schedule)
 
-lr_reducer = ReduceLROnPlateau(factor=np.sqrt(0.1),
-                               cooldown=0,
-                               patience=5,
-                               min_lr=0.5e-6)
-
-callbacks = [checkpoint, lr_reducer, lr_scheduler]
+callbacks = [checkpoint, lr_scheduler]
 
 # Run training, with or without data augmentation.
 if not data_augmentation:
